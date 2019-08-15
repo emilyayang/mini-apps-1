@@ -3,23 +3,18 @@ const router = require('express').Router()
 const controller = require('./controller.js')
 
 router
-  .route('/')
-  .post(controller.post)
-
-// router
-//   .route('/login')
-//   .get(controller.get)
+  .route('/login')
+  .get(controller.getLogin)
+  .post(controller.postLogin)
 
 // router
 //   .route('/shipping')
-//   .get(controller.get)
+//   .get(controller.getShipping)
+//   .post(controller.postShipping)
 
 // router
-//   .route('/payment')
-//   .get(controller.get)
-
-// .post(controller.post)
-// .update(controller.update)
-// .delete(controller.delete)
+//   .route('/login')
+//   .get(controller.getLogin)
+//   .post(controller.postLogin)
 
 module.exports = router;

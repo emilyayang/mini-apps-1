@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const checkout = require('./index.js');
 
-const Login = checkout.define('login', {
+const Login = checkout.define('logins', {
   // attributes
   name: {
     type: Sequelize.STRING,
@@ -19,7 +19,7 @@ const Login = checkout.define('login', {
     timestamps: false
   });
 
-const Shipping = checkout.define('shipping', {
+const Shipping = checkout.define('shippings', {
   // attributes
   line1: {
     type: Sequelize.STRING,
@@ -48,7 +48,7 @@ const Shipping = checkout.define('shipping', {
     timestamps: false
   });
 
-const Payment = checkout.define('payment', {
+const Payment = checkout.define('payments', {
   // attributes
   cc: {
     type: Sequelize.INTEGER,
@@ -56,6 +56,7 @@ const Payment = checkout.define('payment', {
   },
   exp: {
     type: Sequelize.STRING,
+    allowNull: false
   },
   cvv: {
     type: Sequelize.INTEGER,
@@ -74,7 +75,25 @@ Login.hasOne(Payment);
 Shipping.belongsTo(Login);
 Payment.belongsTo(Login);
 
-checkout.sync()
+Login.sync({ force: true }).then(() => {
+  // Now the `users` table in the database corresponds to the model definition
+  return Login.create({
+    name: 'John',
+    email: 'a@g.com',
+    password: "cat"
+  });
+});
+Shipping.sync({ force: true }).then(() => {
+  // Now the `users` table in the database corresponds to the model definition
+  console.log("synced")
+
+});
+Payment.sync({ force: true }).then(() => {
+  // Now the `users` table in the database corresponds to the model definition
+  console.log("synced")
+
+});
+// checkout.sync();
 
 module.exports = Login;
 module.exports = Shipping;
